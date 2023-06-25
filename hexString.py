@@ -35,6 +35,7 @@ def decodeConfig(hex_bytes, key,  iv):
 
     # декодирование байтов с помощью AES cipher
     decoded_bytes = cipher.decrypt(bytes)
+    
 
     # конвертация декодированных байтов в строку
     decoded_string = decoded_bytes.decode('utf-8')
@@ -44,17 +45,22 @@ def decodeConfig(hex_bytes, key,  iv):
     prettyPrint = json.dumps(parsed, indent=4)
     resultWindow(prettyPrint)
 
-def encodeConfig(text, key, iv):
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-    ciphertext = cipher.encrypt(text.encode())
-    hex_text = ciphertext.hex()
-    sg.Print(hex_text)
+def encodeConfig(plaintext, key, iv):
+    key_bytes = bytes.fromhex(key)
+    iv_bytes = bytes.fromhex(iv)
+    block_size = AES.block_size
+    padded_plaintext = plaintext.encode('utf-8') + (block_size - len(plaintext) % block_size) * chr(block_size - len(plaintext) % block_size).encode('utf-8')
+    cipher = AES.new(key_bytes, AES.MODE_CBC, iv_bytes)
+    ciphertext = cipher.encrypt(padded_plaintext)
+    encoded_ciphertext = ciphertext.hex()
+    startMenu(encoded_ciphertext)
 
-def startMenu(): 
+
+def startMenu(textTo): 
     layout =  [
         [sg.Input(size=(55,1), default_text="5a677564567332496852716157716a376f774d774e5763314d766b6a36477548", key='key', enable_events=True,
                   readonly=True, disabled=True), sg.Text("64-byte key", text_color='green')],
-        [sg.Multiline("""""", size=(70,13), key='mLine', focus=True)],
+        [sg.Multiline(f"""{textTo}""", size=(70,13), key='mLine', focus=True)],
         [sg.Button('decode', size=(12, 1)), sg.CloseButton('Close', size=(12, 1))]
     ]
     
@@ -127,28 +133,7 @@ def resultWindow(resultText):
     # text.config(state='disabled')
 
     def encode():
-        iv = '5a677564567332496852716157716a376f774d774e5763314d766b6a36477548'
-        key = '76817c188555fbf361df382e92f9bc8c'
-        text = open("C:\\Users\\frolov.an\\Desktop\\testEncode.txt").read()        
-        
-        text = binascii.hexlify(text)
-        key = binascii.hexlify(key)
-        iv = binascii.hexlify(iv) 
-        
-        cipher = AES.new(key, AES.MODE_CBC, iv)
-        ciphertext = cipher.encrypt(text.encode())
-        
-        sg.Print(ciphertext.hex())
-        input()
-
-
-        # bytes = binascii.unhexlify(hex_bytes)
-        # key = binascii.unhexlify(key)
-        # iv = binascii.unhexlify(iv)
-        
-        # cipher = AES.new(key, AES.MODE_CBC, iv)
-        # decoded_bytes = cipher.decrypt(bytes)
-        # decoded_string = decoded_bytes.decode('utf-8')
+        pass
         
         
     #function to search string in text
@@ -193,5 +178,5 @@ def resultWindow(resultText):
 
 
 
-startMenu()
+startMenu('')
 
