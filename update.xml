@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<?charles serialisation-version='2.0' ?>
+<rewriteSet-array>
+  <rewriteSet>
+    <active>false</active>
+    <name>update</name>
+    <hosts>
+      <locationPatterns>
+        <locationMatch>
+          <location>
+            <protocol>https</protocol>
+            <host>*</host>
+            <path>*/ABCDEFGHIJKLMNOPQRSTUVWXYZ</path>
+          </location>
+          <enabled>true</enabled>
+        </locationMatch>
+      </locationPatterns>
+    </hosts>
+    <rules>
+      <rewriteRule>
+        <active>true</active>
+        <ruleType>3</ruleType>
+        <matchHeader>content-type</matchHeader>
+        <matchValue>application/octet-stream</matchValue>
+        <matchHeaderRegex>false</matchHeaderRegex>
+        <matchValueRegex>false</matchValueRegex>
+        <matchRequest>false</matchRequest>
+        <matchResponse>true</matchResponse>
+        <newHeader>content-type</newHeader>
+        <newValue>application/json; charset=utf-8</newValue>
+        <newHeaderRegex>false</newHeaderRegex>
+        <newValueRegex>false</newValueRegex>
+        <matchWholeValue>false</matchWholeValue>
+        <caseSensitive>false</caseSensitive>
+        <replaceType>2</replaceType>
+      </rewriteRule>
+      <rewriteRule>
+        <active>true</active>
+        <ruleType>7</ruleType>
+        <matchValue></matchValue>
+        <matchHeaderRegex>false</matchHeaderRegex>
+        <matchValueRegex>false</matchValueRegex>
+        <matchRequest>false</matchRequest>
+        <matchResponse>true</matchResponse>
+        <newValue>wDnvnsP8PHtVgrJkbWOhW6yXbHD5oXmOj9zLII7G9K0Y2zAolCTKhnPoz+rL9ynfVmjMQkWosnhxundRuxn/XBVmyyLTq5VCMePkaKqhoBY0rYlNC6FdxZbB+UgKQ0h0qLT04YhbTMKoZ+xgjY/0GY9FEZWISe5nvC+efM+MQZodY1n4f/Y5Z4NrJ4dt/OTEOpjq68FtyhYGZsD9+ISHtFSMTthKXf7VlWF7MAE4JKZ3OWCnnQ1GzVei9d0xxi3e</newValue>
+        <newHeaderRegex>false</newHeaderRegex>
+        <newValueRegex>false</newValueRegex>
+        <matchWholeValue>false</matchWholeValue>
+        <caseSensitive>false</caseSensitive>
+        <replaceType>2</replaceType>
+      </rewriteRule>
+    </rules>
+  </rewriteSet>
+</rewriteSet-array>
