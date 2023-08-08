@@ -5,15 +5,31 @@ import PySimpleGUI as sg
 from tkinter import *
 from tkinter import filedialog
 import json
-from getkey import getkey, key
+import ctypes
+import keyboard
 sg.theme('SystemDefault1')
 
+# 0x409
 # charlyConfigPath = f"C:\\Users\\{getpass.getuser()}\\AppData\\Roaming\\Charles\\charles.config"
 # продовский ключ
 # keyMain = ['5a677564567332496852716157716a376f774d774e5763314d766b6a36477548', 'test04', 'test05', 'test06']
 keyMain = '5a677564567332496852716157716a376f774d774e5763314d766b6a36477548'
 
+def check_language():
+    # user32 = ctypes.WinDLL('user32', use_last_error=True)
+    # curr_window = user32.GetForegroundWindow()
+    # thread_id = user32.GetWindowThreadProcessId(curr_window, 0)
+    # klid = user32.GetKeyboardLayout(thread_id)
+    # lid = klid & (2**16 - 1)
+    # lid_hex = hex(lid)
 
+    
+    if hex(ctypes.WinDLL('user32', use_last_error=True).GetKeyboardLayout(ctypes.WinDLL('user32', use_last_error=True).GetWindowThreadProcessId(ctypes.WinDLL('user32', use_last_error=True).GetForegroundWindow(), 0)) & (2**16 - 1)) == "0x409":
+        print('eng_local')
+    else:
+        keyboard.press_and_release('win+space')
+
+ 
 def readDictPath(path):
     with open(path, "r", encoding='utf-8') as f:
         content = f.read()
@@ -70,7 +86,7 @@ def startMenu(textTo):
         [sg.Button('decode', size=(12, 1)), sg.CloseButton('Close', size=(12, 1))]
     ]
     
-    window = sg.Window('', layout, no_titlebar=True, grab_anywhere=True)
+    window = sg.Window('encoded', layout, no_titlebar=False, grab_anywhere=True)
     while True:
         event, value = window.read(close=True)
         
@@ -86,7 +102,6 @@ def startMenu(textTo):
             except:
                 break
         window.close()
-
 def resultWindow(resultText, iv):
     def get_text():
         getText = text.get("1.0", "end-1c")
@@ -142,7 +157,7 @@ def resultWindow(resultText, iv):
     buttClear = Button(fram, text='Clear', bg='yellow') 
     buttClear.pack(side=RIGHT)
     
-    buttFind = Button(fram, text='Find', bg='green') 
+    buttFind = Button(fram, text='Find', bg='#248c0f') 
     buttFind.pack(side=RIGHT)
 
 
@@ -216,7 +231,6 @@ def resultWindow(resultText, iv):
     def press_x(e):
         clear()
         
-
     root.bind('<Control-f>', press_f)
     root.bind('<Control-v>', press_v)
     root.bind('<Control-x>', press_x)
@@ -225,17 +239,9 @@ def resultWindow(resultText, iv):
     buttClear.config(command=clear)
     buttFind.config(command=find)
     
-    
-    # buttFind.config(command=save_text)
-    
-    # def press_f():
-        
-    
-    
     root.mainloop()
     root.destroy()
 
-
-
+check_language()
 startMenu('')
 
