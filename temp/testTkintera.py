@@ -8,30 +8,29 @@ import json
 from getkey import getkey, key
 sg.theme('SystemDefault1')
 
-root = Tk()
-fram = Frame(root)
-
-root.title('test_Wwindow')
-root.geometry("400x400+700+40")
-
-# Label(fram,text='Text to find: ',).pack(side=LEFT)
-# edit = Entry(fram, width=40)
-# edit.pack(side=LEFT, fill=BOTH, expand=1)
-
-# buttClear = Button(fram, text='Clear', bg='yellow') 
-# buttClear.pack(side=RIGHT)
-
-# buttFind = Button(fram, text='Find', bg='green') 
-# buttFind.pack(side=RIGHT)
-
-fram.pack(side=TOP)
-v = Scrollbar(root, orient = 'vertical')
-v.pack(side=RIGHT, fill = 'y')
 
 
-text = Text(root, height=40, width=70, font=('Consolas',14), yscrollcommand=v.set)
-v.config(command=text.yview)
-text.pack(expand=True)
+# Create the main window
+window = Tk()
 
-root.mainloop()
-root.destroy()
+# Create the menu bar
+menu_bar = Menu(window)
+
+# Create the menu Menu1
+menu_1 = Menu(menu_bar, tearoff=0)
+
+# Create a photo image
+item_1_icon = PhotoImage(file="C:\\Users\\frolov.an\\Desktop\\icon.png")
+
+# Add items for Menu1
+menu_1.add_command(label="Item1", image=item_1_icon, compound="left")
+menu_1.add_cascade(label="Item2")
+
+# Add the menu to the menu bar
+menu_bar.add_cascade(label="Menu1", menu=menu_1)
+
+# Attach the menu bar to the main window
+window.config(menu=menu_bar)
+
+# Start the Tkinter event loop
+window.mainloop()
